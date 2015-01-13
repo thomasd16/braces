@@ -263,9 +263,9 @@ struct json json_lookup(struct json j, char *lookup)
 		for (;;) {
 			if (key[index] == '\0') {
 				if (lookup[index] == '\0')
-					return j.value.object[i].value;
+					return j.val.object[i].value;
 				if (lookup[index] == '.')
-					return json_object_lookup(
+					return json_lookup(
 						j.val.object[i].value,
 						lookup + index + 1);
 			}

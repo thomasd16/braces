@@ -6,6 +6,5 @@ json:
 	mkdir -p build
 	cc -g -Wall -c src/json.c -o build/json.o
 
-test: 
-	
-	tests/test.sh
+test: json
+	cc -g -Wall test/json.c -Isrc/ -Itest/ build/json.o -o test/json
