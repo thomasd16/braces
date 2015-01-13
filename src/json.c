@@ -190,6 +190,7 @@ struct json json_parse(FILE *file) {
 		}
 		
 		case '{':
+		/* object/hashmap parser */
 		{
 			unsigned int index = 0;
 			struct json key;
@@ -239,6 +240,39 @@ struct json json_parse(FILE *file) {
 			break;
 			object_error: free(object);
 			break;
+		}
+	}
+	return ret;
+}
+
+
+struct json json_lookup(struct json j, char *key)
+{
+	{
+	char *key;
+	unsigned int index;
+	unsigned int i;
+	struct json ret;
+	ret.type = JSON_UNDEFINED;
+	if (lookup[0] == '.' && lookup[1] == '\0')
+		return j;
+	if (j.type != JSON_OBJECT)
+		return ret;
+	for (i = 0; i < j.size; i++) {
+		key = j.value.object[i].key;
+		index = 0;
+		for (;;) {
+			if (key[index] == '\0') {
+				if (lookup[index] == '\0')
+					return j.value.object[i].value;
+				if (lookup[index] == '.')
+					return json_object_lookup(
+						j.value.object[i].value,
+						lookup + index + 1);
+			}
+			if (key[index] != lookup[index])
+				break;
+			index++;
 		}
 	}
 	return ret;

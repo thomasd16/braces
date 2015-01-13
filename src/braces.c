@@ -101,8 +101,6 @@ void render_section(struct runtime rt)
 			return;	
 		}
 		render(rt);
-		
-		
 }
 
 enum exit_type render_void(struct runtime rt) 
@@ -198,7 +196,7 @@ int main (int argc, char *argv[])
 	struct json context[MAX_NESTING];
 	BRACES_THROW( argc < 2, "No file specified");
 	rt.context = context;
-	rt.context[0] = json_parse();
+	rt.context[0] = json_parse(stdin);
 	rt.context_count = 1;
 	rt.file = fopen(argv[1], "r");
 	BRACES_THROW(rt.file == NULL, "Failed to open file");
