@@ -1,3 +1,0 @@
-Should be 'true'  : true
-Should be 'false' : false
-Should be 'null'  : null

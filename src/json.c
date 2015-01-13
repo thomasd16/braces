@@ -246,9 +246,8 @@ struct json json_parse(FILE *file) {
 }
 
 
-struct json json_lookup(struct json j, char *key)
+struct json json_lookup(struct json j, char *lookup)
 {
-	{
 	char *key;
 	unsigned int index;
 	unsigned int i;
@@ -259,7 +258,7 @@ struct json json_lookup(struct json j, char *key)
 	if (j.type != JSON_OBJECT)
 		return ret;
 	for (i = 0; i < j.size; i++) {
-		key = j.value.object[i].key;
+		key = j.val.object[i].key;
 		index = 0;
 		for (;;) {
 			if (key[index] == '\0') {
@@ -267,7 +266,7 @@ struct json json_lookup(struct json j, char *key)
 					return j.value.object[i].value;
 				if (lookup[index] == '.')
 					return json_object_lookup(
-						j.value.object[i].value,
+						j.val.object[i].value,
 						lookup + index + 1);
 			}
 			if (key[index] != lookup[index])

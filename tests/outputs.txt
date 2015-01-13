@@ -1,4 +1,0 @@
-Should Be Hello World: Hello World
-Shuold Be World Hello: World Hello
-Should Be Mustache: Mustache
-Should Be empty: 

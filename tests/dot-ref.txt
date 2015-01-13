@@ -1,1 +1,0 @@
-String should be Hello World: Hello World

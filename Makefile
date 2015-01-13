@@ -7,4 +7,5 @@ json:
 	cc -g -Wall -c src/json.c -o build/json.o
 
 test: 
+	
 	tests/test.sh

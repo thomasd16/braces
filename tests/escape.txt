@@ -1,3 +1,0 @@
-Some Escaped Chars: &gt;&lt;&apos;&quot;&amp;
-Some not escaped Chars <>'"&
-Also some not escaped chars <>'"&

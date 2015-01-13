@@ -1,5 +1,0 @@
-Empty arrays are false: Yes
-Empty objects are false: Yes
-Empty strings are false: Yes
-Null is false: Yes
-Undefined is false Yes

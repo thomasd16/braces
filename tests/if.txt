@@ -1,3 +1,0 @@
-Should be 42: "42"
-Should be blank: ""
-Should be Hello World: "Hello World"
