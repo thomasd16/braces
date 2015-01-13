@@ -1,50 +1,33 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <setjmp.h>
-#define JSON_STRING_CHUNK 2048
-#define JSON_OBJECT_CHUNK 30
-#define JSON_ARRAY_CHUNK 60
-#define JSON_BOOL(j) !!( \
-	j.type == JSON_TRUE? 1 : \
-	(j.type == JSON_OBJECT || j.type == JSON_ARRAY)? j.size : \
-	j.type == JSON_STRING? j.value.string[0] : \
-	0) 
-#define JSON_STRINGIFY(j) (\
-	j.type == JSON_STRING? j.value.string: \
-	j.type == JSON_TRUE? "true": \
-	j.type == JSON_FALSE? "false": \
-	j.type == JSON_NULL? "null": \
-	"")
+struct json;
+struct json_object;
+struct json json_parse(FILE *file);
+enum json_type;
 
-typedef struct json json;
-struct object;
 enum json_type {
 	JSON_UNDEFINED = 0,
-	JSON_NULL,
-	JSON_TRUE,
 	JSON_FALSE,
-	JSON_ERROR,
+	JSON_TRUE,
+	JSON_NULL,
 	JSON_STRING,
+	JSON_NUMBER,
 	JSON_ARRAY,
 	JSON_OBJECT
 };
 
 struct json {
 	enum json_type type;
-	unsigned int size;
+	unsigned short int size;
 	union {
-		json *array;
-		char *string;
+		struct json *array;
 		struct json_object *object;
-	} value;
+		char *string;
+		double number;
+		int error;
+	} val;
 };
 
 struct json_object {
 	char *key;
-	struct json value;	
+	struct json value;
 };
-
-
-
-struct json json_parse();
-struct json json_object_lookup(struct json origin, char *lookup);
