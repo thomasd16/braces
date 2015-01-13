@@ -1,13 +1,3 @@
-/* 
- * Copywrite (c) 2014 Thomas Devries <tdevries9@email.davenport.edu>
- * Distributed under the GNU GPL v2. For full terms see the file LICENCE
- * 
- * This utility is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "json.h"
