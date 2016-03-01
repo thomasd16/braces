@@ -1,4 +1,4 @@
-braces
+Braces
 ======
 
 A simple Mustache parser written in C
