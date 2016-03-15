@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "json.h"
 #include "braces.h"
 
@@ -6,11 +7,12 @@
 	(c == ' ' || c == '\n' || c == '\t' || c == '\r')
 	
 #define BRACES_THROW(condition, code) \
-	if (condition) {\
-		fputs(code "\n", stderr);\
-		exit(1);\
-	}
-	
+	do {\
+		if (condition) {\
+			fputs(code "\n", stderr);\
+			exit(1);\
+		}\
+	} while(0)
 #define CHKEOF(c) BRACES_THROW(c == EOF, "Unexpected EOF")
 
 char c;
@@ -72,6 +74,7 @@ void render_inverse(struct runtime rt)
 	else 
 		render_void(rt);
 }
+
 void render_section(struct runtime rt) 
 {
 		struct json data = get_value(rt);
@@ -103,6 +106,8 @@ void render_section(struct runtime rt)
 		render(rt);
 }
 
+
+//Ignore a section of mustache file
 enum exit_type render_void(struct runtime rt) 
 {
 	unsigned short int nesting_depth = 0;
@@ -151,6 +156,7 @@ enum exit_type render(struct runtime rt)
 		if (c == EOF) 
 			return END_OF_FILE;
 		if ( (c = getc(rt.file)) != '{') {
+			//output single brace
 			putchar('{');
 			putchar(c);
 		} else {
@@ -159,6 +165,7 @@ enum exit_type render(struct runtime rt)
 			CHKEOF(c);
 			switch (c) {
 			case '!':
+				//this is simply a comment
 				exit_tag(rt.file);
 				break;
 			case '&': 
@@ -172,15 +179,19 @@ enum exit_type render(struct runtime rt)
 				BRACES_THROW(c != '}', "Incorrectly terminated tag");
 				break;
 			case '#':
+				//loop or if statement
 				render_section(rt);
 				break;
 			case '^':
+				//not tag
 				render_inverse(rt);
 				break;
 			case '/':
+				//closing tag 
 				exit_tag(rt.file);
 				return CLOSE_TAG;
 			default:
+				//single single brace 
 				fseek(rt.file, -1, SEEK_CUR);	
 				output = get_value(rt);
 				html_puts(JSON_STRINGIFY(output));
